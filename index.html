@@ -8,15 +8,44 @@
 </head>
 <body>
     <div id="player" style="display:none"></div>
-
+    <div class="question-section">
+    <h2 id="question">Will you celebrate with me? ❤️</h2>
+    <div class="btn-group">
+        <button class="choice-btn yes-btn" onclick="sayYes()">Yes</button>
+        <button class="choice-btn no-btn" id="noBtn" onmouseover="moveNoButton()">No</button>
+    </div>
+</div>
     <div class="main-content">
-        <h1>HEYYYYOOO MERI JAAN <33 </h1>
-        <p> ALL THE BEST FOR TOMORROW <br>Click the gift to reveal memories!</p>
-        <div class="box" id="giftBox" onclick="celebrate()">🎁</div>
-        <button id="resetBtn" class="reset-btn" onclick="resetPage()">Reset Party 🔄</button>
+        <h1> VALENTINES WEEK COMING UP !!!!!!!!! <33 </h1>
+        <p> WILL YOU BE MY VALENTINE ? </p><div class="main-content">
+        
+    <div class="photo-container">
+        <img src="photo1.jpg" id="mainPhoto" class="main-photo" onclick="celebrate()" alt="WISH">
+    </div>
+
+    <button id="resetBtn" class="reset-btn" onclick="resetPage()">Reset Party 🔄</button>
+</div>
     </div>
 
     <script>
+        function sayYes() {
+    document.getElementById('question').innerHTML = "Yay! I knew it! 🎉";
+    document.querySelector('.btn-group').style.display = 'none';
+    // Automatically trigger the celebration
+    celebrate(); 
+}
+
+function moveNoButton() {
+    const noBtn = document.getElementById('noBtn');
+    
+    // Calculate random positions within the screen
+    const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+    const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+    
+    noBtn.style.position = 'absolute';
+    noBtn.style.left = x + 'px';
+    noBtn.style.top = y + 'px';
+}
      // 1. Load the YouTube API
     var tag = document.createElement('script');
     tag.src = "https://www.youtube.com/iframe_api";
@@ -37,22 +66,30 @@
     }
         function celebrate() {
             player.playVideo();
-            const container = document.body;
-            const resetBtn = document.getElementById('resetBtn');
-            const giftBox = document.getElementById('giftBox');
-            
-            // Show reset button and bounce the gift box
-            resetBtn.style.display = "inline-block";
-            giftBox.style.transform = "scale(0.8)";
+           const container = document.body;
+    const resetBtn = document.getElementById('resetBtn');
+    resetBtn.style.display = "inline-block";
 
-            // 1. Scatter 4 Photos
-            for (let i = 1; i <= 4; i++) {
-                const img = document.createElement('img');
-                img.src = `photo${i}.jpeg`; 
-                img.classList.add('flying-item', 'photo', 'memory-item');
-                setupPosition(img);
-                container.appendChild(img);
-            }
+    // Scatter ONLY Hearts (No more photo scattering)
+    for (let i = 0; i < 25; i++) {
+        const heart = document.createElement('div');
+        heart.innerHTML = '❤️';
+        heart.classList.add('flying-item', 'heart', 'memory-item');
+        setupPosition(heart);
+        container.appendChild(heart);
+    }
+}
+const img = document.createElement('img');
+    img.src = 'photo1.jpg'; // Make sure your one photo is named photo1.jpg
+    img.classList.add('flying-item', 'photo', 'memory-item');
+    
+    // Add error checking just in case
+    img.onerror = function() {
+        console.error("Could not find photo1.jpg. Make sure it's in the folder!");
+    };
+
+    setupPosition(img);
+    container.appendChild(img);
 
             // 2. Scatter 20 Hearts
             for (let i = 0; i < 20; i++) {
@@ -62,7 +99,6 @@
                 setupPosition(heart);
                 container.appendChild(heart);
             }
-        }
 
         function setupPosition(element) {
             const destX = (Math.random() - 0.5) * 85; 
