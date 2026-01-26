@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Khushina!</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="player" style="display:none"></div>
+
+    <div class="main-content">
+        <h1>HEYYYYOOO MERI JAAN <33 </h1>
+        <p> ALL THE BEST FOR TOMORROW <br>Click the gift to reveal memories!</p>
+        <div class="box" id="giftBox" onclick="celebrate()">🎁</div>
+        <button id="resetBtn" class="reset-btn" onclick="resetPage()">Reset Party 🔄</button>
+    </div>
+
+    <script>
+     // 1. Load the YouTube API
+    var tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    var player;
+    function onYouTubeIframeAPIReady() {
+        player = new YT.Player('player', {
+            height: '0',
+            width: '0',
+            videoId: 'ALleMC1kKWw', // REPLACE THIS WITH YOUR VIDEO ID
+            playerVars: {
+                'autoplay': 0,
+                'controls': 0
+            }
+        });
+    }
+        function celebrate() {
+            player.playVideo();
+            const container = document.body;
+            const resetBtn = document.getElementById('resetBtn');
+            const giftBox = document.getElementById('giftBox');
+            
+            // Show reset button and bounce the gift box
+            resetBtn.style.display = "inline-block";
+            giftBox.style.transform = "scale(0.8)";
+
+            // 1. Scatter 4 Photos
+            for (let i = 1; i <= 4; i++) {
+                const img = document.createElement('img');
+                img.src = `photo${i}.jpeg`; 
+                img.classList.add('flying-item', 'photo', 'memory-item');
+                setupPosition(img);
+                container.appendChild(img);
+            }
+
+            // 2. Scatter 20 Hearts
+            for (let i = 0; i < 20; i++) {
+                const heart = document.createElement('div');
+                heart.innerHTML = '❤️';
+                heart.classList.add('flying-item', 'heart', 'memory-item');
+                setupPosition(heart);
+                container.appendChild(heart);
+            }
+        }
+
+        function setupPosition(element) {
+            const destX = (Math.random() - 0.5) * 85; 
+            const destY = (Math.random() - 0.5) * 85; 
+            const rotation = (Math.random() - 0.5) * 60; 
+
+            element.style.setProperty('--x', `${destX}vw`);
+            element.style.setProperty('--y', `${destY}vh`);
+            element.style.setProperty('--r', `${rotation}deg`);
+        }
+
+        function resetPage() {
+            // Remove all scattered items
+            const items = document.querySelectorAll('.memory-item');
+            items.forEach(item => item.remove());
+            
+            // Hide reset button and reset gift box
+            document.getElementById('resetBtn').style.display = "none";
+            document.getElementById('giftBox').style.transform = "scale(1)";
+        }
+    </script>
+</body>
+</html>
