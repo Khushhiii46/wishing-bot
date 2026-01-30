@@ -37,16 +37,11 @@
 
 function moveNoButton() {
     const noBtn = document.getElementById('noBtn');
-    
-    // Define the safe area around the center (where the photo is)
-    // We want the button to stay at least 200px away from the center
     const padding = 200; 
     const centerX = window.innerWidth / 2;
     const centerY = window.innerHeight / 2;
 
     let newX, newY;
-
-    // Keep picking a random spot until it is far enough from the center
     do {
         newX = Math.random() * (window.innerWidth - noBtn.offsetWidth);
         newY = Math.random() * (window.innerHeight - noBtn.offsetHeight);
@@ -135,3 +130,4 @@ const img = document.createElement('img');
 </body>
 
 </html>
+
